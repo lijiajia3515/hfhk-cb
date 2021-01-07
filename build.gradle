@@ -1,0 +1,27 @@
+buildscript {
+  apply from: "${rootDir}/gradle/repositories.gradle"
+}
+
+plugins {
+  id 'io.spring.dependency-management' version '1.0.10.RELEASE' apply false
+  id 'org.springframework.boot' version '2.4.1' apply false
+}
+
+allprojects {
+  apply from: "${rootDir}/gradle/repositories.gradle"
+
+  group = 'com.hfhk.system'
+
+  tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+  }
+}
+
+subprojects {
+  apply from: "${rootDir}/gradle/java.gradle"
+
+  apply from: "${rootDir}/gradle/dependency-management.gradle"
+  apply from: "${rootDir}/gradle/lombok.gradle"
+}
+
+

@@ -1,0 +1,13 @@
+// lombok config
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+}
+
+dependencies {
+  annotationProcessor "org.projectlombok:lombok"
+  compileOnly "org.projectlombok:lombok"
+
+  implementation 'org.slf4j:slf4j-api'
+}

@@ -1,0 +1,38 @@
+repositories {
+
+  maven {
+    url 'https://maven.aliyun.com/repository/public'
+  }
+
+  maven {
+    url 'https://maven.aliyun.com/repository/spring'
+  }
+  maven {
+    url 'https://repo.spring.io/libs-milestone'
+  }
+
+  if (project.hasProperty('repository.release.url')) {
+    maven {
+      url project.property('repository.release.url')
+      if (project.hasProperty('repository.release.username')) {
+        credentials {
+          username project.property('repository.release.username')
+          password project.property('repository.release.password')
+        }
+      }
+    }
+  }
+  if (project.hasProperty('repository.snapshot.url')) {
+    maven {
+      url project.property('repository.snapshot.url')
+      if (project.hasProperty('repository.snapshot.username')) {
+        credentials {
+          username project.property('repository.snapshot.username')
+          password project.property('repository.snapshot.password')
+        }
+      }
+    }
+  }
+  mavenCentral()
+  mavenLocal()
+}

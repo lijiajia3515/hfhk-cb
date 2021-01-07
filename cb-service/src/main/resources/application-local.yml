@@ -1,0 +1,30 @@
+hfhk:
+  auth:
+    server: auth.hfhksoft.com
+    client:
+      id: hfhk_system
+      secret: hfhk_system
+  mongo:
+    database: hfhk-system
+    authentication-database: hfhk
+    host: 192.168.30.21
+    port: 27017
+    username: hfhk
+    password: Hfhk.1320.
+  redis:
+    database: 11
+    host: 192.168.30.21
+    port: 6379
+    password: Hfhk.1320.
+  nacos:
+    server-addr: 192.168.30.21:8848
+    discovery:
+      server-addr: 192.168.30.21:8848
+      namespace: hfhk
+      group: hfhk
+  consul:
+    host: 192.168.30.21
+    port: 8500
+
+server:
+  port: 10011
