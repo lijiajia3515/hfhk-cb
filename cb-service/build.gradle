@@ -43,8 +43,11 @@ dependencies {
   implementation "com.hfhk.cairo.starter:cairo-starter-mongo:${cairoVersion}"
   implementation "com.hfhk.cairo.starter:cairo-starter-service:${cairoVersion}"
 
-  // system
+  // domain
   implementation project(':cb-domain')
+
+  // client
+  implementation "com.hfhk.system:system-client:${cairoVersion}"
 
 
   // test

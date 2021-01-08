@@ -59,10 +59,11 @@ public class ProjectService {
 	public Optional<Project> findById(@NotNull String id) {
 		Criteria criteria = Criteria.where(ProjectMongo.FIELD._ID).is(id);
 		Query query = Query.query(criteria);
+		return Optional.empty();
 	}
 
-	public Optional<Project> findByMongo(@NotNull ProjectMongo project){
-
+	public Optional<Project> findByMongo(@NotNull ProjectMongo project) {
+		return Optional.empty();
 	}
 
 }
