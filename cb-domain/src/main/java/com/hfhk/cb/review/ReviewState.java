@@ -6,14 +6,10 @@ public enum ReviewState {
 	 */
 	Submit,
 
-	/**
+	/*
 	 * 审核中
 	 */
-	Processing,
-
-	/**
-	 *
-	 */
+	// Processing,
 	/**
 	 * 通过
 	 */

@@ -118,7 +118,7 @@ feign:
         logger-level: FULL
         request-interceptors:
           - com.hfhk.cairo.feign.interceptor.BasicRequestInterceptor
-      serviceAuthV1UserOAuthClientCredentialsClient:
+      serviceAuthV1UserClientCredentialsClient:
         logger-level: FULL
         request-interceptors:
           - com.hfhk.cairo.feign.interceptor.ClientOAuth2RequestInterceptor
@@ -126,7 +126,10 @@ feign:
         logger-level: FULL
         request-interceptors:
           - com.hfhk.cairo.feign.interceptor.RequestOAuth2RequestInterceptor
-
+      serviceSystemV1DictionaryClientCredentialsClient:
+        logger-level: FULL
+        request-interceptors:
+          - com.hfhk.cairo.feign.interceptor.ClientOAuth2RequestInterceptor
 
 management:
   endpoints:

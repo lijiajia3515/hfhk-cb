@@ -1,6 +1,7 @@
 package com.hfhk.cb.unit;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -9,8 +10,10 @@ import java.io.Serializable;
 
 @Data
 @Accessors(chain = true)
+
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Unit implements Serializable {
 	/**
 	 * id 标识

@@ -1,16 +1,12 @@
 package com.hfhk.cb.service.mongo;
 
 import com.hfhk.cairo.mongo.data.Metadata;
-import com.hfhk.cairo.mongo.data.mapping.model.AbstractUpperCamelCaseField;
+import com.hfhk.cb.unit.UnitType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
-/**
- * 文件夹
- */
 
 @Data
 @Accessors(chain = true)
@@ -18,32 +14,27 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FolderMongo {
+public class ProjectUnitMongo {
 	/**
-	 * id
+	 * id 标识
 	 */
 	private String id;
 
 	/**
-	 * client
+	 * 单位类型
 	 */
-	private String client;
+	private UnitType type;
 
 	/**
-	 * path
+	 * 负责人名称
 	 */
-	private String path;
-
+	private String leaderName;
+	
 	/**
-	 * 元数据
+	 * 负责人电话
 	 */
+	private String leaderPhoneNumber;
+
 	@Builder.Default
 	private Metadata metadata = new Metadata();
-
-	public static final Field FIELD = new Field();
-
-	public static class Field extends AbstractUpperCamelCaseField {
-		public final String CLIENT = field("Client");
-		public final String PATH = field("path");
-	}
 }
