@@ -92,11 +92,11 @@ public class ProjectReviewMongo implements Serializable {
 
 		public final String USER = field("User");
 		public final String PROJECTS = field("Projects");
-		public final String OWNER_UNIT = field("OwnerUnit");
+		public final String UNIT = field("Unit");
 		public final String STATE = field("State");
 		public final String REMARK = field("Remark");
 		public final String APPLY_AT = field("ApplyAt");
-		
+
 		public final String REVIEWED_USER = field("ReviewedUser");
 		public final String REVIEWED_AT = field("ReviewedAt");
 
