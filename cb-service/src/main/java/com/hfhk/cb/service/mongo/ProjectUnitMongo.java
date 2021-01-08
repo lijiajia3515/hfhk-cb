@@ -26,10 +26,15 @@ public class ProjectUnitMongo {
 	private UnitType type;
 
 	/**
+	 * 名称
+	 */
+	private String name;
+	
+	/**
 	 * 负责人名称
 	 */
 	private String leaderName;
-	
+
 	/**
 	 * 负责人电话
 	 */

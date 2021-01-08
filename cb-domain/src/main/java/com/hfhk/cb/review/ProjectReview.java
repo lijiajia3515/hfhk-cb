@@ -1,7 +1,7 @@
 package com.hfhk.cb.review;
 
 import com.hfhk.auth.domain.user.User;
-import com.hfhk.cb.project.SimpleProject;
+import com.hfhk.cb.project.Project;
 import com.hfhk.cb.unit.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,17 +29,17 @@ public class ProjectReview {
 	/**
 	 * 申请人
 	 */
-	private User applyUser;
+	private User user;
 
 	/**
 	 * 项目信息
 	 */
-	private List<SimpleProject> project;
+	private List<Project> projects;
 
 	/**
-	 * 所属单位
+	 * 参建单位
 	 */
-	private Unit ownerUnit;
+	private Unit unit;
 
 	/**
 	 * 状态

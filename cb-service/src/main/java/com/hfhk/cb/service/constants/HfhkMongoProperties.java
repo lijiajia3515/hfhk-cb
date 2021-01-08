@@ -31,6 +31,7 @@ public class HfhkMongoProperties {
 		}
 
 		public final String PROJECT = collection("projects");
+		public final String PROJECT_REVIEW = collection("project_reviews");
 
 
 		private String collection(String collection) {

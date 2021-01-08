@@ -1,5 +1,6 @@
 package com.hfhk.cb.service.mongo;
 
+import com.hfhk.cairo.mongo.data.Metadata;
 import com.hfhk.cairo.mongo.data.mapping.model.AbstractMongoField;
 import com.hfhk.cairo.mongo.data.mapping.model.AbstractUpperCamelCaseField;
 import lombok.AllArgsConstructor;
@@ -75,7 +76,7 @@ public class ProjectMongo {
 	/**
 	 * 质检单位
 	 */
-	private List<ProjectUnitMongo> qualityUnit;
+	private List<ProjectUnitMongo> qualityUnits;
 
 
 	// other info
@@ -105,25 +106,31 @@ public class ProjectMongo {
 	 */
 	private String remark;
 
+	@Builder.Default
+	private Metadata metadata = new Metadata();
+
 	public static final MongoField FIELD = new MongoField();
 
 
 	public static class MongoField extends AbstractUpperCamelCaseField {
 
-		public final String CODE = field("Code");
-		public final String Name = field("Name");
-		public final Items ITEMS = new Items(this, "Items");
+		public final String TYPE = field("Type");
+		public final String PARK = field("Park");
+		public final String AREA = field("Area");
+		public final String PRICE = field("Price");
+		public final String ADDRESS = field("Address");
+		public final String OWNER_UNIT = field("OwnerUnit");
+		public final String SUPERVISION_UNITS = field("SupervisionUnits");
+		public final String CONSTRUCTION_UNITS = field("ConstructionUnits");
+		public final String SURVEY_UNITS = field("SurveyUnits");
+		public final String DESIGN_UNITS = field("DesignUnits");
+		public final String QUALITY_UNITS = field("QualityUnits");
+		public final String CONSTRUCTION_START_AT = field("ConstructionStartAt");
+		public final String CONSTRUCTION_END_AT = field("ConstructionEndAt");
+		public final String SUPERVISION_LEADER = field("SupervisionLeader");
+		public final String SUPERVISION_START_AT = field("SupervisionStartAt");
+		public final String SCHEDULE = field("Schedule");
+		public final String REMARK = field("Remark");
 
-		public static class Items extends AbstractUpperCamelCaseField {
-			public Items() {
-			}
-
-			public Items(AbstractMongoField parent, String prefix) {
-				super(parent, prefix);
-			}
-
-			public final String CODE = field("Code");
-			public final String VALUE = field("Value");
-		}
 	}
 }

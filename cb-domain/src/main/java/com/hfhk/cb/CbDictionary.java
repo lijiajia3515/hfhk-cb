@@ -1,6 +1,6 @@
 package com.hfhk.cb;
 
-public enum Dictionary {
+public enum CbDictionary {
 	/**
 	 * 园区
 	 */
@@ -16,10 +16,10 @@ public enum Dictionary {
 	 */
 	ConstructionSchedule("ConstructionSchedule");
 
-	private String id;
+	public final String ID;
 
-	Dictionary(String id) {
-		this.id = id;
+	CbDictionary(String id) {
+		this.ID = id;
 	}
 
 }

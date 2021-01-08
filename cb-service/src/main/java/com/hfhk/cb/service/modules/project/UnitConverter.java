@@ -16,6 +16,7 @@ public class UnitConverter {
 		return ProjectUnitMongo.builder()
 			.id(unit.getId())
 			.type(Optional.ofNullable(type).orElse(unit.getType()))
+			.name(unit.getName())
 			.leaderName(unit.getLeaderName())
 			.leaderPhoneNumber(unit.getLeaderPhoneNumber())
 			.build();
@@ -30,6 +31,7 @@ public class UnitConverter {
 		return Unit.builder()
 			.id(unit.getId())
 			.type(unit.getType())
+			.name(unit.getName())
 			.leaderName(unit.getLeaderName())
 			.leaderPhoneNumber(unit.getLeaderPhoneNumber())
 			.build();

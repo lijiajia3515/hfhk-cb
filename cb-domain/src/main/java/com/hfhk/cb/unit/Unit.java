@@ -24,6 +24,10 @@ public class Unit implements Serializable {
 	 */
 	private UnitType type;
 	/**
+	 * 单位名称
+	 */
+	private String name;
+	/**
 	 * 负责人名称
 	 */
 	private String leaderName;

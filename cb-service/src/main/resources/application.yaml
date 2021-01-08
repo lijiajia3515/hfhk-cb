@@ -114,7 +114,7 @@ feign:
     config:
       default:
         logger-level: FULL
-      serviceAuthV1AuthenticationBasicClient:
+      serviceAuthV1AuthBasicClient:
         logger-level: FULL
         request-interceptors:
           - com.hfhk.cairo.feign.interceptor.BasicRequestInterceptor

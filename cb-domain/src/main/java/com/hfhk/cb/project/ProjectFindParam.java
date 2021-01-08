@@ -16,7 +16,11 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProjectFindRequest extends AbstractPage<ProjectFindRequest> {
+public class ProjectFindParam extends AbstractPage<ProjectFindParam> {
+	/**
+	 * ids
+	 */
+	private Set<String> ids;
 	/**
 	 * 类型
 	 */

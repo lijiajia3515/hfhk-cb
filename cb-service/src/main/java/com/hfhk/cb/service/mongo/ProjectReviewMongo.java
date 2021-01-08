@@ -1,8 +1,8 @@
 package com.hfhk.cb.service.mongo;
 
 import com.hfhk.cairo.mongo.data.Metadata;
+import com.hfhk.cairo.mongo.data.mapping.model.AbstractUpperCamelCaseField;
 import com.hfhk.cb.review.ReviewState;
-import com.hfhk.cb.unit.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,12 +35,12 @@ public class ProjectReviewMongo implements Serializable {
 	/**
 	 * 项目信息
 	 */
-	private Set<String> project;
+	private Set<String> projects;
 
 	/**
 	 * 所属单位
 	 */
-	private Unit ownerUnit;
+	private String unit;
 
 	/**
 	 * 状态
@@ -58,6 +58,11 @@ public class ProjectReviewMongo implements Serializable {
 	private LocalDateTime applyAt;
 
 	/**
+	 * 审批人
+	 */
+	private String reviewedUser;
+
+	/**
 	 * 审批时间
 	 */
 	private String reviewedAt;
@@ -72,6 +77,31 @@ public class ProjectReviewMongo implements Serializable {
 	 */
 	private LocalDateTime rejectedAt;
 
+	/**
+	 * metadata
+	 */
 	@Builder.Default
 	private Metadata metadata = new Metadata();
+
+	public static MongoField FIELD = new MongoField();
+
+	public static class MongoField extends AbstractUpperCamelCaseField {
+		public MongoField() {
+
+		}
+
+		public final String USER = field("User");
+		public final String PROJECTS = field("Projects");
+		public final String OWNER_UNIT = field("OwnerUnit");
+		public final String STATE = field("State");
+		public final String REMARK = field("Remark");
+		public final String APPLY_AT = field("ApplyAt");
+		
+		public final String REVIEWED_USER = field("ReviewedUser");
+		public final String REVIEWED_AT = field("ReviewedAt");
+
+		public final String PASSED_AT = field("PassedAt");
+		public final String REJECTED_AT = field("RejectedAt");
+
+	}
 }

@@ -1,8 +1,6 @@
 package com.hfhk.cb.project;
 
-import com.hfhk.auth.domain.user.User;
 import com.hfhk.cb.unit.Unit;
-import com.hfhk.system.dictionary.Dictionary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,20 +12,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Project
- */
 @Data
 @Accessors(chain = true)
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Project implements Serializable {
-	/**
-	 * id
-	 */
-	private String id;
+public class ProjectSaveParam implements Serializable {
 	/**
 	 * 项目名称
 	 */
@@ -35,7 +26,7 @@ public class Project implements Serializable {
 	/**
 	 * 类型
 	 */
-	private Dictionary.Item type;
+	private String type;
 	/**
 	 * 面积
 	 */
@@ -47,12 +38,16 @@ public class Project implements Serializable {
 	/**
 	 * 园区
 	 */
-	private Dictionary.Item park;
+	private String park;
 	/**
 	 * 项目地址
 	 */
 	private String address;
 
+	/**
+	 * 监督负责人
+	 */
+	private String supervisionLeader;
 
 	// participant units
 	/**
@@ -88,23 +83,18 @@ public class Project implements Serializable {
 	 * 竣工时间
 	 */
 	private LocalDateTime constructionEndAt;
-
-	/**
-	 * 监督负责人
-	 */
-	private User supervisionLeader;
 	/**
 	 * 受监时间
 	 */
 	private LocalDateTime supervisionStartAt;
+
 	/**
 	 * 进度
 	 */
-	private Dictionary.Item schedule;
+	private String schedule;
 
 	/**
 	 * 备注
 	 */
 	private String remark;
-
 }

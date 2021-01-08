@@ -18,7 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProjectSaveParm implements Serializable {
+public class ProjectModifyParam implements Serializable {
+	private String id;
 	/**
 	 * 项目名称
 	 */
