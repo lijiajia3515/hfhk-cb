@@ -1,4 +1,4 @@
-package com.hfhk.cb.review;
+package com.hfhk.cb.project.authority;
 
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProjectReviewApplyParam implements Serializable {
-	private Set<String> projects;
-	private String unit;
+public class ProjectAuthorityAuditPassParam implements Serializable {
+	private Set<String> ids;
+	private String remark;
 }

@@ -1,6 +1,6 @@
-package com.hfhk.cb.review;
+package com.hfhk.cb.audit;
 
-public enum ReviewState {
+public enum AuditState {
 	/**
 	 * 提交/待审核
 	 */

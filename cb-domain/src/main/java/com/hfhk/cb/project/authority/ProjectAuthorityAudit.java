@@ -1,7 +1,8 @@
-package com.hfhk.cb.review;
+package com.hfhk.cb.project.authority;
 
 import com.hfhk.auth.domain.user.User;
 import com.hfhk.cb.project.Project;
+import com.hfhk.cb.audit.AuditState;
 import com.hfhk.cb.unit.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProjectReview {
+public class ProjectAuthorityAudit {
 	/**
 	 * id
 	 */
@@ -44,7 +45,7 @@ public class ProjectReview {
 	/**
 	 * 状态
 	 */
-	private ReviewState state;
+	private AuditState state;
 
 	/**
 	 * 备注

@@ -1,6 +1,7 @@
-package com.hfhk.cb.review;
+package com.hfhk.cb.project.authority;
 
 import com.hfhk.cairo.core.page.AbstractPage;
+import com.hfhk.cb.audit.AuditState;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProjectReviewFindParam extends AbstractPage<ProjectReviewFindParam> {
+public class ProjectAuthorityAuditFindParam extends AbstractPage<ProjectAuthorityAuditFindParam> {
 	/**
 	 * keyword
 	 */
@@ -31,5 +32,5 @@ public class ProjectReviewFindParam extends AbstractPage<ProjectReviewFindParam>
 	/**
 	 * 状态
 	 */
-	private Set<ReviewState> states;
+	private Set<AuditState> states;
 }
