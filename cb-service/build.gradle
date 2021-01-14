@@ -38,16 +38,13 @@ dependencies {
   // implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
   // implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
 
-  // cairo
-  implementation "com.hfhk.cairo:cairo-mongo:${cairoVersion}"
+  // hfhk
   implementation "com.hfhk.cairo.starter:cairo-starter-mongo:${cairoVersion}"
   implementation "com.hfhk.cairo.starter:cairo-starter-service:${cairoVersion}"
 
   // domain
   implementation project(':cb-domain')
-
-  // client
-  implementation "com.hfhk.system:system-client:${cairoVersion}"
+  implementation "com.hfhk.system:system-client:${systemVersion}"
 
 
   // test
