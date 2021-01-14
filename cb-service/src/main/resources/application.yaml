@@ -83,7 +83,7 @@ logging:
     name: ${hfhk.workdir:/hfhk/system/service/logs}/hfhk.log
 
 server:
-  port: 80
+  port: ${hfhk.server.port:80}
   http2:
     enabled: true
   servlet:

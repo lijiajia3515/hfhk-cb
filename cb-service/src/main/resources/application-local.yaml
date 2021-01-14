@@ -1,4 +1,6 @@
 hfhk:
+  server:
+    port: 10030
   auth:
     server: auth.hfhksoft.com
     client:
@@ -26,5 +28,4 @@ hfhk:
     host: 192.168.30.21
     port: 8500
 
-server:
-  port: 10020
+
