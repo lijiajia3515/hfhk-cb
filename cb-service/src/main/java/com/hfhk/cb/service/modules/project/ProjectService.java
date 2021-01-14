@@ -13,7 +13,6 @@ import com.hfhk.system.client.DictionaryClientCredentialsClient;
 import com.hfhk.system.dictionary.Dictionary;
 import com.hfhk.system.dictionary.DictionaryFindParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
