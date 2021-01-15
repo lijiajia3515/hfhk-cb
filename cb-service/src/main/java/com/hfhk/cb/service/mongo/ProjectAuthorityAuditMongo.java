@@ -60,12 +60,12 @@ public class ProjectAuthorityAuditMongo implements Serializable {
 	/**
 	 * 审批人
 	 */
-	private String reviewedUser;
+	private String auditedUser;
 
 	/**
 	 * 审批时间
 	 */
-	private String reviewedAt;
+	private String auditedAt;
 
 	/**
 	 * 通过时间

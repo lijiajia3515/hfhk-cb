@@ -20,7 +20,7 @@ public class ProjectAuthorityAuditConverter {
 			.state(mongo.getState())
 			.remark(mongo.getRemark())
 			.applyAt(mongo.getApplyAt())
-			.reviewedAt(mongo.getReviewedAt())
+			.reviewedAt(mongo.getAuditedAt())
 			.passedAt(mongo.getPassedAt())
 			.rejectedAt(mongo.getRejectedAt())
 			.build();

@@ -9,6 +9,7 @@ import com.hfhk.cb.audit.*;
 import com.hfhk.cb.service.constants.HfhkMongoProperties;
 import com.hfhk.cb.service.modules.project.ProjectService;
 import com.hfhk.cb.service.mongo.ProjectAuthorityAuditMongo;
+import com.mongodb.client.result.UpdateResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -49,14 +50,14 @@ public class ProjectAuthorityAuditService {
 			.state(AuditState.Submit)
 			.build();
 
-		ProjectAuthorityAuditMongo insert = mongoTemplate.insert(mongo, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
+		ProjectAuthorityAuditMongo insert = mongoTemplate.insert(mongo, mongoProperties.COLLECTION.INSTRUCT);
 		log.debug("[project review][insert] result-> {}", insert);
 
 		return build(mongo);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public ProjectAuthorityAudit pass(@NotNull String uid, @Validated ProjectAuthorityAuditPassParam param) {
+	public List<ProjectAuthorityAudit> pass(@NotNull String uid, @Validated ProjectAuthorityAuditPassParam param) {
 		Criteria criteria = Criteria.where(ProjectAuthorityAuditMongo.FIELD._ID).in(param.getIds());
 
 		Query query = Query.query(criteria);
@@ -67,14 +68,15 @@ public class ProjectAuthorityAuditService {
 			.set(ProjectAuthorityAuditMongo.FIELD.STATE, AuditState.Pass)
 			.set(ProjectAuthorityAuditMongo.FIELD.REVIEWED_USER, uid);
 
-		ProjectAuthorityAuditMongo contents = mongoTemplate.findAndModify(query, update, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
-		log.debug("[project review][pass] result-> {}", contents);
+		UpdateResult updateResult = mongoTemplate.updateMulti(query, update, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.INSTRUCT);
+		log.debug("[project authority audit][pass] result-> {}", updateResult);
+		List<ProjectAuthorityAuditMongo> contents = mongoTemplate.find(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
 
 		return build(contents);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public ProjectAuthorityAudit reject(@NotNull String uid, @Validated ProjectAuthorityAuditRejectParam param) {
+	public List<ProjectAuthorityAudit> reject(@NotNull String uid, @Validated ProjectAuthorityAuditRejectParam param) {
 		Criteria criteria = Criteria.where(ProjectAuthorityAuditMongo.FIELD._ID).in(param.getIds());
 
 		Query query = Query.query(criteria);
@@ -84,26 +86,26 @@ public class ProjectAuthorityAuditService {
 			.set(ProjectAuthorityAuditMongo.FIELD.REJECTED_AT, now)
 			.set(ProjectAuthorityAuditMongo.FIELD.STATE, AuditState.Reject)
 			.set(ProjectAuthorityAuditMongo.FIELD.REVIEWED_USER, uid);
-		ProjectAuthorityAuditMongo contents = mongoTemplate.findAndModify(query, update, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
-		log.debug("[project review][reject] result-> {}", contents);
-
+		UpdateResult updateResult = mongoTemplate.updateMulti(query, update, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.INSTRUCT);
+		log.debug("[project review][reject] result-> {}", updateResult);
+		List<ProjectAuthorityAuditMongo> contents = mongoTemplate.find(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
 		return build(contents);
 	}
 
 	public List<ProjectAuthorityAudit> find(@Validated ProjectAuthorityAuditFindParam param) {
 		Criteria criteria = buildCriteria(param);
 		Query query = Query.query(criteria);
-		List<ProjectAuthorityAuditMongo> contents = mongoTemplate.find(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
+		List<ProjectAuthorityAuditMongo> contents = mongoTemplate.find(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.INSTRUCT);
 		return build(contents);
 	}
 
 	public Page<ProjectAuthorityAudit> findPage(@Validated ProjectAuthorityAuditFindParam param) {
 		Criteria criteria = buildCriteria(param);
 		Query query = Query.query(criteria);
-		long total = mongoTemplate.count(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
+		long total = mongoTemplate.count(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.INSTRUCT);
 		query.with(param.pageable()).with(defaultSort());
 
-		List<ProjectAuthorityAuditMongo> contents = mongoTemplate.find(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
+		List<ProjectAuthorityAuditMongo> contents = mongoTemplate.find(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.INSTRUCT);
 		List<ProjectAuthorityAudit> reviews = build(contents);
 		return new Page<>(param, reviews, total);
 	}

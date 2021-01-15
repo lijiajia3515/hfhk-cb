@@ -27,14 +27,14 @@ public class ProjectAuthorityAuditApi {
 
 	@PatchMapping("/Pass")
 	@PreAuthorize("isAuthenticated()")
-	public ProjectAuthorityAudit pass(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditPassParam param) {
+	public List<ProjectAuthorityAudit> pass(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditPassParam param) {
 		String uid = principal.getUser().getUid();
 		return this.projectReviewService.pass(uid, param);
 	}
 
 	@PatchMapping("/Reject")
 	@PreAuthorize("isAuthenticated()")
-	public ProjectAuthorityAudit pass(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditRejectParam param) {
+	public List<ProjectAuthorityAudit> pass(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditRejectParam param) {
 		String uid = principal.getUser().getUid();
 		return this.projectReviewService.reject(uid, param);
 	}
