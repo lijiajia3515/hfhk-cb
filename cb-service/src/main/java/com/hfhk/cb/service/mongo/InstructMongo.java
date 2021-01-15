@@ -49,15 +49,14 @@ public class InstructMongo {
 	 * 指定审核人
 	 */
 	private String designateAuditUser;
-	/**
-	 * she
-	 */
+
 	private AuditState auditState;
-	private String auditedUser;
-	private LocalDateTime auditAt;
-	private String remark;
+	private String auditedUid;
+	private LocalDateTime appliedAt;
+	private LocalDateTime auditedAt;
 	private LocalDateTime passedAt;
 	private LocalDateTime rejectedAt;
+	private String remark;
 
 	@Builder.Default
 	private Metadata metadata = new Metadata();
@@ -70,11 +69,15 @@ public class InstructMongo {
 		public final String PROJECT = field("Project");
 		public final String UNIT = field("Unit");
 		public final String DESIGNATE_AUDIT_USER = field("DesignateAuditUser");
+
 		public final String AUDIT_STATE = field("AuditState");
-		public final String AUDIT_USER = field("AuditUser");
-		public final String AUDIT_AT = field("AuditAt");
+		public final String AUDITED_UID = field("AuditUser");
+
+		public final String AUDITED_AT = field("AuditAt");
+		public final String APPLIED_AT = field("PassedAt");
+		public final String PASSED_AT = field("PassedAt");
+		public final String REJECTED_AT = field("RejectedAt");
+
 		public final String REMARK = field("Remark");
-		public final String PassedAt = field("PassedAt");
-		public final String RejectedAt = field("RejectedAt");
 	}
 }

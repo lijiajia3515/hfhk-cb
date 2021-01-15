@@ -10,17 +10,17 @@ import java.util.List;
 
 public class ProjectAuthorityAuditConverter {
 
-	public static ProjectAuthorityAudit reviewMapper(ProjectAuthorityAuditMongo mongo, User user, List<Project> projects) {
+	public static ProjectAuthorityAudit convert(ProjectAuthorityAuditMongo mongo, User user, List<Project> projects) {
 		if (mongo == null) return null;
 		return ProjectAuthorityAudit.builder()
 			.id(mongo.getId())
 			.user(user)
 			.unit(Unit.builder().name(mongo.getUnit()).build())
 			.projects(projects)
-			.state(mongo.getState())
+			.state(mongo.getAuditState())
 			.remark(mongo.getRemark())
-			.applyAt(mongo.getApplyAt())
-			.reviewedAt(mongo.getAuditedAt())
+			.appliedAt(mongo.getAppliedAt())
+			.auditedAt(mongo.getAuditedAt())
 			.passedAt(mongo.getPassedAt())
 			.rejectedAt(mongo.getRejectedAt())
 			.build();

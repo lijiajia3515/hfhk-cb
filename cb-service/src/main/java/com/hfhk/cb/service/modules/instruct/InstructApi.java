@@ -41,7 +41,6 @@ public class InstructApi {
 	@PostMapping("/Find")
 	@PreAuthorize("isAuthenticated()")
 	public List<Instruct> find(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody InstructFindParam param) {
-		String uid = principal.getUser().getUid();
 		return instructService.find(param);
 	}
 

@@ -12,42 +12,42 @@ import java.util.List;
 @RestController
 @RequestMapping("/Project/Authority/Audit")
 public class ProjectAuthorityAuditApi {
-	private final ProjectAuthorityAuditService projectReviewService;
+	private final ProjectAuthorityAuditService projectAuthorityAuditService;
 
-	public ProjectAuthorityAuditApi(ProjectAuthorityAuditService projectReviewService) {
-		this.projectReviewService = projectReviewService;
+	public ProjectAuthorityAuditApi(ProjectAuthorityAuditService projectAuthorityAuditService) {
+		this.projectAuthorityAuditService = projectAuthorityAuditService;
 	}
 
 	@PostMapping("/Apply")
 	@PreAuthorize("isAuthenticated()")
 	public ProjectAuthorityAudit apply(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditApplyParam param) {
 		String uid = principal.getUser().getUid();
-		return this.projectReviewService.apply(uid, param);
+		return this.projectAuthorityAuditService.apply(uid, param);
 	}
 
 	@PatchMapping("/Pass")
 	@PreAuthorize("isAuthenticated()")
 	public List<ProjectAuthorityAudit> pass(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditPassParam param) {
 		String uid = principal.getUser().getUid();
-		return this.projectReviewService.pass(uid, param);
+		return this.projectAuthorityAuditService.pass(uid, param);
 	}
 
 	@PatchMapping("/Reject")
 	@PreAuthorize("isAuthenticated()")
 	public List<ProjectAuthorityAudit> pass(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditRejectParam param) {
 		String uid = principal.getUser().getUid();
-		return this.projectReviewService.reject(uid, param);
+		return this.projectAuthorityAuditService.reject(uid, param);
 	}
 
 	@PostMapping("/Find")
 	@PreAuthorize("isAuthenticated()")
 	public List<ProjectAuthorityAudit> find(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditFindParam param) {
-		return this.projectReviewService.find(param);
+		return this.projectAuthorityAuditService.find(param);
 	}
 
 	@PostMapping("/FindPage")
 	@PreAuthorize("isAuthenticated()")
 	public Page<ProjectAuthorityAudit> findPage(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody ProjectAuthorityAuditFindParam param) {
-		return this.projectReviewService.findPage(param);
+		return this.projectAuthorityAuditService.findPage(param);
 	}
 }

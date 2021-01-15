@@ -49,6 +49,7 @@ public class InstructService {
 			.unit(param.getUnit())
 			.designateAuditUser(param.getDesignateAuditUser())
 			.auditState(AuditState.Submit)
+			.appliedAt(LocalDateTime.now())
 			.build();
 		instruct = mongoTemplate.insert(instruct, properties.COLLECTION.INSTRUCT);
 		return findByMongo(instruct);
@@ -60,9 +61,9 @@ public class InstructService {
 			Criteria.where(InstructMongo.FIELD._ID).in(param)
 		);
 		Update update = Update.update(InstructMongo.FIELD.AUDIT_STATE, AuditState.Pass)
-			.set(InstructMongo.FIELD.AUDIT_AT, LocalDateTime.now())
-			.set(InstructMongo.FIELD.PassedAt, LocalDateTime.now())
-			.set(InstructMongo.FIELD.AUDIT_USER, uid)
+			.set(InstructMongo.FIELD.AUDITED_AT, LocalDateTime.now())
+			.set(InstructMongo.FIELD.PASSED_AT, LocalDateTime.now())
+			.set(InstructMongo.FIELD.AUDITED_UID, uid)
 			.set(InstructMongo.FIELD.REMARK, param.getRemark());
 		UpdateResult updateResult = mongoTemplate.updateMulti(query, update, properties.COLLECTION.INSTRUCT);
 		log.debug("[project authority][pass] result-> {}", updateResult);
@@ -76,9 +77,9 @@ public class InstructService {
 			Criteria.where(InstructMongo.FIELD._ID).in(param)
 		);
 		Update update = Update.update(InstructMongo.FIELD.AUDIT_STATE, AuditState.Reject)
-			.set(InstructMongo.FIELD.AUDIT_AT, LocalDateTime.now())
-			.set(InstructMongo.FIELD.RejectedAt, LocalDateTime.now())
-			.set(InstructMongo.FIELD.AUDIT_USER, uid)
+			.set(InstructMongo.FIELD.AUDITED_AT, LocalDateTime.now())
+			.set(InstructMongo.FIELD.REJECTED_AT, LocalDateTime.now())
+			.set(InstructMongo.FIELD.AUDITED_UID, uid)
 			.set(InstructMongo.FIELD.REMARK, param.getRemark());
 		UpdateResult updateResult = mongoTemplate.updateMulti(query, update, properties.COLLECTION.INSTRUCT);
 		log.debug("[project authority][pass] result-> {}", updateResult);
@@ -124,7 +125,7 @@ public class InstructService {
 
 	private List<Instruct> findByMongo(List<InstructMongo> instructs) {
 		Map<String, User> userMap = Optional.of(instructs.stream()
-			.flatMap(i -> Stream.of(i.getAuditedUser(), i.getDesignateAuditUser()))
+			.flatMap(i -> Stream.of(i.getAuditedUid(), i.getDesignateAuditUser()))
 			.collect(Collectors.toSet()))
 			.map(userClientCredentialsClient::findMap)
 			.orElse(Collections.emptyMap());
@@ -140,14 +141,14 @@ public class InstructService {
 			.map(i -> {
 				List<File> files = i.getFiles().stream().map(fileMap::get).collect(Collectors.toList());
 				User designateAuditUser = userMap.get(i.getDesignateAuditUser());
-				User auditedUser = userMap.get(i.getAuditedUser());
+				User auditedUser = userMap.get(i.getAuditedUid());
 				return InstructConverter.mongo(i, files, designateAuditUser, auditedUser);
 			})
 			.collect(Collectors.toList());
 	}
 
 	private Instruct findByMongo(InstructMongo instruct) {
-		Map<String, User> userMap = Optional.of(Stream.of(instruct.getAuditedUser(), instruct.getDesignateAuditUser())
+		Map<String, User> userMap = Optional.of(Stream.of(instruct.getAuditedUid(), instruct.getDesignateAuditUser())
 			.filter(Objects::nonNull)
 			.collect(Collectors.toList()))
 			.map(userClientCredentialsClient::findMap)
@@ -161,6 +162,6 @@ public class InstructService {
 			)
 			.orElse(Collections.emptyList());
 
-		return InstructConverter.mongo(instruct, files, userMap.get(instruct.getDesignateAuditUser()), userMap.get(instruct.getAuditedUser()));
+		return InstructConverter.mongo(instruct, files, userMap.get(instruct.getDesignateAuditUser()), userMap.get(instruct.getAuditedUid()));
 	}
 }

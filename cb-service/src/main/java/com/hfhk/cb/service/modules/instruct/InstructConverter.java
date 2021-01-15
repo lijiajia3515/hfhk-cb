@@ -5,7 +5,6 @@ import com.hfhk.cb.instruct.Instruct;
 import com.hfhk.cb.service.mongo.InstructMongo;
 import com.hfhk.system.file.File;
 
-import java.lang.invoke.LambdaMetafactory;
 import java.util.List;
 
 public class InstructConverter {
@@ -19,8 +18,8 @@ public class InstructConverter {
 			.unit(mongo.getUnit())
 			.designateAuditUser(designateAuditUser)
 			.auditState(mongo.getAuditState())
-			.auditUser(auditedUser)
-			.auditAt(mongo.getAuditAt())
+			.auditedUser(auditedUser)
+			.auditedAt(mongo.getAuditedAt())
 			.passedAt(mongo.getPassedAt())
 			.rejectedAt(mongo.getRejectedAt())
 			.remark(mongo.getRemark())

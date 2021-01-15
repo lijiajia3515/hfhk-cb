@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
- * Project Review
+ * Project Authority Audit
  */
 @Data
 @Accessors(chain = true)
@@ -45,22 +45,18 @@ public class ProjectAuthorityAuditMongo implements Serializable {
 	/**
 	 * 状态
 	 */
-	private AuditState state;
-
-	/**
-	 * 备注
-	 */
-	private String remark;
-
-	/**
-	 * 申请时间
-	 */
-	private LocalDateTime applyAt;
+	private AuditState auditState;
 
 	/**
 	 * 审批人
 	 */
-	private String auditedUser;
+	private String auditedUid;
+
+	/**
+	 * 申请时间
+	 */
+	private LocalDateTime appliedAt;
+
 
 	/**
 	 * 审批时间
@@ -76,6 +72,13 @@ public class ProjectAuthorityAuditMongo implements Serializable {
 	 * 拒绝时间
 	 */
 	private LocalDateTime rejectedAt;
+
+
+	/**
+	 * 备注
+	 */
+	private String remark;
+
 
 	/**
 	 * metadata
@@ -93,15 +96,15 @@ public class ProjectAuthorityAuditMongo implements Serializable {
 		public final String USER = field("User");
 		public final String PROJECTS = field("Projects");
 		public final String UNIT = field("Unit");
-		public final String STATE = field("State");
-		public final String REMARK = field("Remark");
-		public final String APPLY_AT = field("ApplyAt");
+		public final String AUDIT_STATE = field("AuditState");
+		public final String AUDITED_UID = field("AuditedUid");
 
-		public final String REVIEWED_USER = field("ReviewedUser");
-		public final String REVIEWED_AT = field("ReviewedAt");
 
+		public final String AUDITED_AT = field("AuditedAt");
+		public final String APPLIED_AT = field("AppliedAt");
 		public final String PASSED_AT = field("PassedAt");
 		public final String REJECTED_AT = field("RejectedAt");
+		public final String REMARK = field("Remark");
 
 	}
 }

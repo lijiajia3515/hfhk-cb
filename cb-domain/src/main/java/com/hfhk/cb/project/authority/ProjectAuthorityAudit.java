@@ -55,11 +55,11 @@ public class ProjectAuthorityAudit {
 	/**
 	 * 申请时间
 	 */
-	private LocalDateTime applyAt;
+	private LocalDateTime appliedAt;
 	/**
 	 * 审批时间
 	 */
-	private String reviewedAt;
+	private String auditedAt;
 	/**
 	 * 通过时间
 	 */
