@@ -8,7 +8,7 @@ import com.hfhk.cb.project.authority.*;
 import com.hfhk.cb.audit.*;
 import com.hfhk.cb.service.constants.HfhkMongoProperties;
 import com.hfhk.cb.service.modules.project.ProjectService;
-import com.hfhk.cb.service.mongo.ProjectReviewMongo;
+import com.hfhk.cb.service.mongo.ProjectAuthorityAuditMongo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -41,7 +41,7 @@ public class ProjectAuthorityAuditService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public ProjectAuthorityAudit apply(@NotNull String uid, @Validated ProjectAuthorityAuditApplyParam param) {
-		ProjectReviewMongo mongo = ProjectReviewMongo.builder()
+		ProjectAuthorityAuditMongo mongo = ProjectAuthorityAuditMongo.builder()
 			.applyUser(uid)
 			.unit(param.getUnit())
 			.projects(param.getProjects())
@@ -49,7 +49,7 @@ public class ProjectAuthorityAuditService {
 			.state(AuditState.Submit)
 			.build();
 
-		ProjectReviewMongo insert = mongoTemplate.insert(mongo, mongoProperties.COLLECTION.PROJECT_REVIEW);
+		ProjectAuthorityAuditMongo insert = mongoTemplate.insert(mongo, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
 		log.debug("[project review][insert] result-> {}", insert);
 
 		return build(mongo);
@@ -57,17 +57,17 @@ public class ProjectAuthorityAuditService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public ProjectAuthorityAudit pass(@NotNull String uid, @Validated ProjectAuthorityAuditPassParam param) {
-		Criteria criteria = Criteria.where(ProjectReviewMongo.FIELD._ID).in(param.getIds());
+		Criteria criteria = Criteria.where(ProjectAuthorityAuditMongo.FIELD._ID).in(param.getIds());
 
 		Query query = Query.query(criteria);
 		LocalDateTime now = LocalDateTime.now();
 		Update update = new Update()
-			.set(ProjectReviewMongo.FIELD.REVIEWED_AT, now)
-			.set(ProjectReviewMongo.FIELD.PASSED_AT, now)
-			.set(ProjectReviewMongo.FIELD.STATE, AuditState.Pass)
-			.set(ProjectReviewMongo.FIELD.REVIEWED_USER, uid);
+			.set(ProjectAuthorityAuditMongo.FIELD.REVIEWED_AT, now)
+			.set(ProjectAuthorityAuditMongo.FIELD.PASSED_AT, now)
+			.set(ProjectAuthorityAuditMongo.FIELD.STATE, AuditState.Pass)
+			.set(ProjectAuthorityAuditMongo.FIELD.REVIEWED_USER, uid);
 
-		ProjectReviewMongo contents = mongoTemplate.findAndModify(query, update, ProjectReviewMongo.class, mongoProperties.COLLECTION.PROJECT_REVIEW);
+		ProjectAuthorityAuditMongo contents = mongoTemplate.findAndModify(query, update, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
 		log.debug("[project review][pass] result-> {}", contents);
 
 		return build(contents);
@@ -75,16 +75,16 @@ public class ProjectAuthorityAuditService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public ProjectAuthorityAudit reject(@NotNull String uid, @Validated ProjectAuthorityAuditRejectParam param) {
-		Criteria criteria = Criteria.where(ProjectReviewMongo.FIELD._ID).in(param.getIds());
+		Criteria criteria = Criteria.where(ProjectAuthorityAuditMongo.FIELD._ID).in(param.getIds());
 
 		Query query = Query.query(criteria);
 		LocalDateTime now = LocalDateTime.now();
 		Update update = new Update()
-			.set(ProjectReviewMongo.FIELD.REVIEWED_AT, now)
-			.set(ProjectReviewMongo.FIELD.REJECTED_AT, now)
-			.set(ProjectReviewMongo.FIELD.STATE, AuditState.Reject)
-			.set(ProjectReviewMongo.FIELD.REVIEWED_USER, uid);
-		ProjectReviewMongo contents = mongoTemplate.findAndModify(query, update, ProjectReviewMongo.class, mongoProperties.COLLECTION.PROJECT_REVIEW);
+			.set(ProjectAuthorityAuditMongo.FIELD.REVIEWED_AT, now)
+			.set(ProjectAuthorityAuditMongo.FIELD.REJECTED_AT, now)
+			.set(ProjectAuthorityAuditMongo.FIELD.STATE, AuditState.Reject)
+			.set(ProjectAuthorityAuditMongo.FIELD.REVIEWED_USER, uid);
+		ProjectAuthorityAuditMongo contents = mongoTemplate.findAndModify(query, update, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
 		log.debug("[project review][reject] result-> {}", contents);
 
 		return build(contents);
@@ -93,37 +93,37 @@ public class ProjectAuthorityAuditService {
 	public List<ProjectAuthorityAudit> find(@Validated ProjectAuthorityAuditFindParam param) {
 		Criteria criteria = buildCriteria(param);
 		Query query = Query.query(criteria);
-		List<ProjectReviewMongo> contents = mongoTemplate.find(query, ProjectReviewMongo.class, mongoProperties.COLLECTION.PROJECT_REVIEW);
+		List<ProjectAuthorityAuditMongo> contents = mongoTemplate.find(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
 		return build(contents);
 	}
 
 	public Page<ProjectAuthorityAudit> findPage(@Validated ProjectAuthorityAuditFindParam param) {
 		Criteria criteria = buildCriteria(param);
 		Query query = Query.query(criteria);
-		long total = mongoTemplate.count(query, ProjectReviewMongo.class, mongoProperties.COLLECTION.PROJECT_REVIEW);
+		long total = mongoTemplate.count(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
 		query.with(param.pageable()).with(defaultSort());
 
-		List<ProjectReviewMongo> contents = mongoTemplate.find(query, ProjectReviewMongo.class, mongoProperties.COLLECTION.PROJECT_REVIEW);
+		List<ProjectAuthorityAuditMongo> contents = mongoTemplate.find(query, ProjectAuthorityAuditMongo.class, mongoProperties.COLLECTION.PROJECT_AUTHORITY_AUDIT);
 		List<ProjectAuthorityAudit> reviews = build(contents);
 		return new Page<>(param, reviews, total);
 	}
 
 	public Sort defaultSort() {
 		return Sort.by(
-			Sort.Order.desc(ProjectReviewMongo.FIELD.METADATA.SORT),
-			Sort.Order.desc(ProjectReviewMongo.FIELD.APPLY_AT),
-			Sort.Order.desc(ProjectReviewMongo.FIELD.METADATA.CREATED.AT),
-			Sort.Order.desc(ProjectReviewMongo.FIELD._ID)
+			Sort.Order.desc(ProjectAuthorityAuditMongo.FIELD.METADATA.SORT),
+			Sort.Order.desc(ProjectAuthorityAuditMongo.FIELD.APPLY_AT),
+			Sort.Order.desc(ProjectAuthorityAuditMongo.FIELD.METADATA.CREATED.AT),
+			Sort.Order.desc(ProjectAuthorityAuditMongo.FIELD._ID)
 		);
 	}
 
-	private ProjectAuthorityAudit build(ProjectReviewMongo mongo) {
+	private ProjectAuthorityAudit build(ProjectAuthorityAuditMongo mongo) {
 		return build(Collections.singleton(mongo)).stream().findFirst().orElseThrow();
 	}
 
-	private List<ProjectAuthorityAudit> build(Collection<ProjectReviewMongo> reviews) {
-		Map<String, User> userMap = userClientCredentialsClient.findMap(reviews.stream().map(ProjectReviewMongo::getApplyUser).collect(Collectors.toSet()));
-		Map<String, Project> projectMap = projectService.findMap(reviews.stream().map(ProjectReviewMongo::getProjects).filter(Objects::nonNull).flatMap(Collection::stream).collect(Collectors.toSet()));
+	private List<ProjectAuthorityAudit> build(Collection<ProjectAuthorityAuditMongo> reviews) {
+		Map<String, User> userMap = userClientCredentialsClient.findMap(reviews.stream().map(ProjectAuthorityAuditMongo::getApplyUser).collect(Collectors.toSet()));
+		Map<String, Project> projectMap = projectService.findMap(reviews.stream().map(ProjectAuthorityAuditMongo::getProjects).filter(Objects::nonNull).flatMap(Collection::stream).collect(Collectors.toSet()));
 		return reviews.stream()
 			.map(x -> ProjectAuthorityAuditConverter.reviewMapper(x, userMap.get(x.getApplyUser()), x.getProjects().stream().map(projectMap::get).filter(Objects::nonNull).collect(Collectors.toList())))
 			.collect(Collectors.toList());
@@ -131,10 +131,10 @@ public class ProjectAuthorityAuditService {
 
 	private Criteria buildCriteria(@Validated ProjectAuthorityAuditFindParam param) {
 		Criteria criteria = new Criteria();
-		Optional.ofNullable(param.getIds()).filter(x -> !x.isEmpty()).ifPresent(x -> criteria.and(ProjectReviewMongo.FIELD._ID).in(x));
-		Optional.ofNullable(param.getProjects()).filter(x -> !x.isEmpty()).ifPresent(x -> criteria.and(ProjectReviewMongo.FIELD.PROJECTS).in(x));
-		Optional.ofNullable(param.getUsers()).filter(x -> !x.isEmpty()).ifPresent(x -> criteria.and(ProjectReviewMongo.FIELD.USER).in(x));
-		Optional.ofNullable(param.getStates()).filter(x -> !x.isEmpty()).ifPresent(x -> criteria.and(ProjectReviewMongo.FIELD.STATE).in(x));
+		Optional.ofNullable(param.getIds()).filter(x -> !x.isEmpty()).ifPresent(x -> criteria.and(ProjectAuthorityAuditMongo.FIELD._ID).in(x));
+		Optional.ofNullable(param.getProjects()).filter(x -> !x.isEmpty()).ifPresent(x -> criteria.and(ProjectAuthorityAuditMongo.FIELD.PROJECTS).in(x));
+		Optional.ofNullable(param.getUsers()).filter(x -> !x.isEmpty()).ifPresent(x -> criteria.and(ProjectAuthorityAuditMongo.FIELD.USER).in(x));
+		Optional.ofNullable(param.getStates()).filter(x -> !x.isEmpty()).ifPresent(x -> criteria.and(ProjectAuthorityAuditMongo.FIELD.STATE).in(x));
 		return criteria;
 	}
 }

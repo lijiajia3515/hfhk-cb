@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class ProjectConverter {
 	public static Project projectMapper(ProjectMongo mongo,
-										Dictionary.Item park, Dictionary.Item type, Dictionary.Item schedule,
+										Dictionary.Item type, Dictionary.Item park, Dictionary.Item schedule,
 										User supervisionLeader) {
 		return Project.builder()
 			.id(mongo.getId())

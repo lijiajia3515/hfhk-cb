@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProjectReviewMongo implements Serializable {
+public class ProjectAuthorityAuditMongo implements Serializable {
 	/**
 	 * id
 	 */
