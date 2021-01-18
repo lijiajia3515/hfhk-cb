@@ -34,7 +34,7 @@ public class Instruct implements Serializable {
 
 	private AuditState auditState;
 	private User auditedUser;
-	
+
 	private LocalDateTime auditedAt;
 	private LocalDateTime appliedAt;
 	private LocalDateTime passedAt;
