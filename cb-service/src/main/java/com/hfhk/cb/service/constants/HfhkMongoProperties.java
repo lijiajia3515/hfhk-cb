@@ -32,6 +32,7 @@ public class HfhkMongoProperties {
 
 		public final String PROJECT = collection("projects");
 		public final String PROJECT_AUTHORITY_AUDIT = collection("project_authority_audits");
+		public final String SUPERVISION = collection("Supervision");
 		public final String INSTRUCT = collection("instructs");
 
 
