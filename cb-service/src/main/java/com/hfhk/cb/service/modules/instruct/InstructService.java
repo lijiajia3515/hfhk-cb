@@ -58,7 +58,7 @@ public class InstructService {
 	@Transactional(rollbackFor = Exception.class)
 	public List<Instruct> pass(String uid, InstructPassParam param) {
 		Query query = Query.query(
-			Criteria.where(InstructMongo.FIELD._ID).in(param)
+			Criteria.where(InstructMongo.FIELD._ID).in(param.getIds())
 		);
 		Update update = Update.update(InstructMongo.FIELD.AUDIT_STATE, AuditState.Pass)
 			.set(InstructMongo.FIELD.AUDITED_AT, LocalDateTime.now())
@@ -74,7 +74,7 @@ public class InstructService {
 	@Transactional(rollbackFor = Exception.class)
 	public List<Instruct> reject(String uid, InstructRejectParam param) {
 		Query query = Query.query(
-			Criteria.where(InstructMongo.FIELD._ID).in(param)
+			Criteria.where(InstructMongo.FIELD._ID).in(param.getIds())
 		);
 		Update update = Update.update(InstructMongo.FIELD.AUDIT_STATE, AuditState.Reject)
 			.set(InstructMongo.FIELD.AUDITED_AT, LocalDateTime.now())
@@ -108,9 +108,10 @@ public class InstructService {
 
 	private Criteria buildCriteria(InstructFindParam param) {
 		Criteria criteria = new Criteria();
+		Optional.ofNullable(param.getIds()).filter(x -> !x.isEmpty()).ifPresent(ids -> criteria.and(InstructMongo.FIELD._ID).in(ids));
 		Optional.ofNullable(param.getKeyword()).ifPresent(keyword -> criteria.and(InstructMongo.FIELD._ID).regex(keyword));
-		Optional.ofNullable(param.getProjects()).ifPresent(projects -> criteria.and(InstructMongo.FIELD.PROJECT).in(projects));
-		Optional.ofNullable(param.getDesignateAuditUsers()).ifPresent(users -> criteria.and(InstructMongo.FIELD.DESIGNATE_AUDIT_USER).in(users));
+		Optional.ofNullable(param.getProjects()).filter(x -> !x.isEmpty()).ifPresent(projects -> criteria.and(InstructMongo.FIELD.PROJECT).in(projects));
+		Optional.ofNullable(param.getDesignateAuditUsers()).filter(x -> !x.isEmpty()).ifPresent(users -> criteria.and(InstructMongo.FIELD.DESIGNATE_AUDIT_USER).in(users));
 		return criteria;
 	}
 
@@ -129,7 +130,9 @@ public class InstructService {
 			.collect(Collectors.toSet()))
 			.map(userClientCredentialsClient::findMap)
 			.orElse(Collections.emptyMap());
-		Map<String, File> fileMap = Optional.of(instructs.stream().flatMap(x -> x.getFiles().stream())
+		Map<String, File> fileMap = Optional.of(instructs.stream()
+			.filter(x -> x.getFiles() != null)
+			.flatMap(x -> x.getFiles().stream())
 			.collect(Collectors.toSet()))
 			.filter(x -> !x.isEmpty())
 			.map(x -> FileFindParam.builder().ids(x).build())
@@ -139,7 +142,7 @@ public class InstructService {
 
 		return instructs.stream()
 			.map(i -> {
-				List<File> files = i.getFiles().stream().map(fileMap::get).collect(Collectors.toList());
+				List<File> files = Optional.ofNullable(i.getFiles()).orElse(Collections.emptyList()).stream().map(fileMap::get).filter(Objects::nonNull).collect(Collectors.toList());
 				User designateAuditUser = userMap.get(i.getDesignateAuditUser());
 				User auditedUser = userMap.get(i.getAuditedUid());
 				return InstructConverter.mongo(i, files, designateAuditUser, auditedUser);
@@ -153,8 +156,7 @@ public class InstructService {
 			.collect(Collectors.toList()))
 			.map(userClientCredentialsClient::findMap)
 			.orElse(Collections.emptyMap());
-		List<File> files = Optional.of(Optional.ofNullable(instruct.getFiles())
-			.orElse(Collections.emptyList()))
+		List<File> files = Optional.of(Optional.ofNullable(instruct.getFiles()).orElse(Collections.emptyList()))
 			.map(ids ->
 				fileClientCredentialsClient.findFile(FileFindParam.builder().ids(new HashSet<>(ids)).build()).stream()
 					.filter(x -> ids.contains(x.getId()))

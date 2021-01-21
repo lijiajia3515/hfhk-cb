@@ -18,6 +18,8 @@ import java.util.Set;
 public class InstructFindParam extends AbstractPage<InstructFindParam> implements Serializable {
 	private String keyword;
 
+	private Set<String> ids;
+
 	private Set<InstructType> type;
 
 	private Set<String> projects;
