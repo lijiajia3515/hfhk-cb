@@ -2,6 +2,7 @@ package com.hfhk.cb.instruct;
 
 import com.hfhk.auth.domain.user.User;
 import com.hfhk.cb.audit.AuditState;
+import com.hfhk.cb.project.Project;
 import com.hfhk.system.file.File;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,7 @@ public class Instruct implements Serializable {
 
 	private List<File> files;
 
-	private String project;
+	private Project project;
 
 	private String unit;
 
