@@ -127,7 +127,9 @@ public class ProjectAuthorityAuditService {
 		Map<String, User> userMap = userClientCredentialsClient.findMap(audits.stream().map(ProjectAuthorityAuditMongo::getApplyUser).collect(Collectors.toSet()));
 		Map<String, Project> projectMap = projectService.findMap(audits.stream().map(ProjectAuthorityAuditMongo::getProjects).filter(Objects::nonNull).flatMap(Collection::stream).collect(Collectors.toSet()));
 		return audits.stream()
-			.map(x -> ProjectAuthorityAuditConverter.convert(x, userMap.get(x.getApplyUser()), x.getProjects().stream().map(projectMap::get).filter(Objects::nonNull).collect(Collectors.toList())))
+			.map(x -> ProjectAuthorityAuditConverter.convert(x,
+				userMap.get(x.getApplyUser()),
+				Optional.ofNullable(x.getProjects()).orElse(Collections.emptySet()).stream().map(projectMap::get).filter(Objects::nonNull).collect(Collectors.toList())))
 			.collect(Collectors.toList());
 	}
 
