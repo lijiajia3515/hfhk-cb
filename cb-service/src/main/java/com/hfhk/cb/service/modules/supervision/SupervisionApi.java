@@ -31,7 +31,7 @@ public class SupervisionApi {
 	}
 
 	@PostMapping("/Find")
-	public List<Supervision> auth(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody SupervisionFindParam param) {
+	public List<Supervision> find(@AuthenticationPrincipal AuthPrincipal principal, @RequestBody SupervisionFindParam param) {
 		return this.supervisionService.find(param);
 	}
 
