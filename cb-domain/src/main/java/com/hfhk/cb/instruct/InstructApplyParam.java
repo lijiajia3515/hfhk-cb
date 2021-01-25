@@ -1,7 +1,5 @@
 package com.hfhk.cb.instruct;
 
-import com.hfhk.auth.domain.user.User;
-import com.hfhk.system.file.File;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

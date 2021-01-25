@@ -1,6 +1,6 @@
 package com.hfhk.cb.service.modules.instruct;
 
-import com.hfhk.auth.domain.user.User;
+import com.hfhk.auth.modules.user.User;
 import com.hfhk.cb.instruct.Instruct;
 import com.hfhk.cb.project.Project;
 import com.hfhk.cb.service.mongo.InstructMongo;

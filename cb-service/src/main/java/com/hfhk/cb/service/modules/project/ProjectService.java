@@ -1,8 +1,8 @@
 package com.hfhk.cb.service.modules.project;
 
 import com.hfhk.auth.client.UserClientCredentialsClient;
-import com.hfhk.auth.domain.user.User;
-import com.hfhk.auth.domain.user.UserFindParam;
+import com.hfhk.auth.modules.user.User;
+import com.hfhk.auth.modules.user.UserFindParam;
 import com.hfhk.cairo.core.page.Page;
 import com.hfhk.cb.CbDictionary;
 import com.hfhk.cb.project.*;

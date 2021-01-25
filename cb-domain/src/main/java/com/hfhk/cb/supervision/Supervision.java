@@ -1,6 +1,6 @@
 package com.hfhk.cb.supervision;
 
-import com.hfhk.auth.domain.Metadata;
+import com.hfhk.auth.Metadata;
 import com.hfhk.cb.project.Project;
 import com.hfhk.system.file.File;
 import lombok.AllArgsConstructor;

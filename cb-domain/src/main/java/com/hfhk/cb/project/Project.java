@@ -1,6 +1,6 @@
 package com.hfhk.cb.project;
 
-import com.hfhk.auth.domain.user.User;
+import com.hfhk.auth.modules.user.User;
 import com.hfhk.cb.unit.Unit;
 import com.hfhk.system.dictionary.Dictionary;
 import lombok.AllArgsConstructor;

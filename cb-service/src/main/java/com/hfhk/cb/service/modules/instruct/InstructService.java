@@ -1,7 +1,7 @@
 package com.hfhk.cb.service.modules.instruct;
 
 import com.hfhk.auth.client.UserClientCredentialsClient;
-import com.hfhk.auth.domain.user.User;
+import com.hfhk.auth.modules.user.User;
 import com.hfhk.cairo.core.page.Page;
 import com.hfhk.cb.audit.AuditState;
 import com.hfhk.cb.instruct.*;

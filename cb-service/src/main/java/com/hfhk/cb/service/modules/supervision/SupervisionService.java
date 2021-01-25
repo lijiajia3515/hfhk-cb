@@ -1,8 +1,8 @@
 package com.hfhk.cb.service.modules.supervision;
 
+import com.hfhk.auth.Metadata;
 import com.hfhk.auth.client.UserClientCredentialsClient;
-import com.hfhk.auth.domain.Metadata;
-import com.hfhk.auth.domain.user.User;
+import com.hfhk.auth.modules.user.User;
 import com.hfhk.cairo.core.page.Page;
 import com.hfhk.cb.project.Project;
 import com.hfhk.cb.service.constants.HfhkMongoProperties;
