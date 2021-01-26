@@ -10,7 +10,7 @@ plugins {
 allprojects {
   apply from: "${rootDir}/gradle/repositories.gradle"
 
-  group = 'com.hfhk.system'
+  group = 'com.hfhk.cb'
 
   tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"

@@ -2,7 +2,7 @@ package com.hfhk.cb.supervision;
 
 import com.hfhk.auth.Metadata;
 import com.hfhk.cb.project.Project;
-import com.hfhk.system.file.File;
+import com.hfhk.system.modules.file.File;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -4,7 +4,7 @@ import com.hfhk.auth.modules.user.User;
 import com.hfhk.cb.instruct.Instruct;
 import com.hfhk.cb.project.Project;
 import com.hfhk.cb.service.mongo.InstructMongo;
-import com.hfhk.system.file.File;
+import com.hfhk.system.modules.file.File;
 
 import java.util.List;
 import java.util.Optional;

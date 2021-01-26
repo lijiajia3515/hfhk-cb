@@ -3,7 +3,7 @@ package com.hfhk.cb.service.modules.project;
 import com.hfhk.auth.modules.user.User;
 import com.hfhk.cb.project.Project;
 import com.hfhk.cb.service.mongo.ProjectMongo;
-import com.hfhk.system.dictionary.Dictionary;
+import com.hfhk.system.modules.dictionary.Dictionary;
 
 import java.util.Optional;
 

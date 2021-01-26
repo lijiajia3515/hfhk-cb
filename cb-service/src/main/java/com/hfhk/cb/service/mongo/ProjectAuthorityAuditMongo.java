@@ -57,11 +57,10 @@ public class ProjectAuthorityAuditMongo implements Serializable {
 	 */
 	private LocalDateTime appliedAt;
 
-
 	/**
 	 * 审批时间
 	 */
-	private String auditedAt;
+	private LocalDateTime auditedAt;
 
 	/**
 	 * 通过时间

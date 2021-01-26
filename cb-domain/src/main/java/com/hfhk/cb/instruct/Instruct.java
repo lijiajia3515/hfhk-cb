@@ -3,7 +3,7 @@ package com.hfhk.cb.instruct;
 import com.hfhk.auth.modules.user.User;
 import com.hfhk.cb.audit.AuditState;
 import com.hfhk.cb.project.Project;
-import com.hfhk.system.file.File;
+import com.hfhk.system.modules.file.File;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

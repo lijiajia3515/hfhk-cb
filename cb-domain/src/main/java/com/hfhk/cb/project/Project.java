@@ -2,7 +2,7 @@ package com.hfhk.cb.project;
 
 import com.hfhk.auth.modules.user.User;
 import com.hfhk.cb.unit.Unit;
-import com.hfhk.system.dictionary.Dictionary;
+import com.hfhk.system.modules.dictionary.Dictionary;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

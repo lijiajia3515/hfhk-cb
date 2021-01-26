@@ -1,8 +1,8 @@
 package com.hfhk.cb.service.modules.supervision;
 
 import com.hfhk.auth.Metadata;
-import com.hfhk.auth.client.UserClientCredentialsClient;
 import com.hfhk.auth.modules.user.User;
+import com.hfhk.auth.modules.user.UserClientCredentialsClient;
 import com.hfhk.cairo.core.page.Page;
 import com.hfhk.cb.project.Project;
 import com.hfhk.cb.service.constants.HfhkMongoProperties;
@@ -12,9 +12,9 @@ import com.hfhk.cb.supervision.Supervision;
 import com.hfhk.cb.supervision.SupervisionDeleteParam;
 import com.hfhk.cb.supervision.SupervisionFindParam;
 import com.hfhk.cb.supervision.SupervisionSaveParam;
-import com.hfhk.system.client.FileClientCredentialsClient;
-import com.hfhk.system.file.File;
-import com.hfhk.system.file.FileFindParam;
+import com.hfhk.system.modules.file.File;
+import com.hfhk.system.modules.file.FileClientCredentialsClient;
+import com.hfhk.system.modules.file.FileFindParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;

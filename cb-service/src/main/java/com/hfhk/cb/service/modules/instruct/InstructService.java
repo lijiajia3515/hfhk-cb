@@ -1,7 +1,7 @@
 package com.hfhk.cb.service.modules.instruct;
 
-import com.hfhk.auth.client.UserClientCredentialsClient;
 import com.hfhk.auth.modules.user.User;
+import com.hfhk.auth.modules.user.UserClientCredentialsClient;
 import com.hfhk.cairo.core.page.Page;
 import com.hfhk.cb.audit.AuditState;
 import com.hfhk.cb.instruct.*;
@@ -9,9 +9,9 @@ import com.hfhk.cb.project.Project;
 import com.hfhk.cb.service.constants.HfhkMongoProperties;
 import com.hfhk.cb.service.modules.project.ProjectService;
 import com.hfhk.cb.service.mongo.InstructMongo;
-import com.hfhk.system.client.FileClientCredentialsClient;
-import com.hfhk.system.file.File;
-import com.hfhk.system.file.FileFindParam;
+import com.hfhk.system.modules.file.File;
+import com.hfhk.system.modules.file.FileClientCredentialsClient;
+import com.hfhk.system.modules.file.FileFindParam;
 import com.mongodb.client.result.UpdateResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
