@@ -3,6 +3,9 @@ package com.hfhk.cb.service.modules.instruct;
 import com.hfhk.auth.modules.user.User;
 import com.hfhk.auth.modules.user.client.UserClientCredentialsClient;
 import com.hfhk.cairo.core.page.Page;
+import com.hfhk.cairo.mongo.data.Created;
+import com.hfhk.cairo.mongo.data.LastModified;
+import com.hfhk.cairo.mongo.data.Metadata;
 import com.hfhk.cb.audit.AuditState;
 import com.hfhk.cb.instruct.*;
 import com.hfhk.cb.project.Project;
@@ -130,7 +133,24 @@ public class InstructService {
 
 	private List<Instruct> findByMongo(List<InstructMongo> instructs) {
 		Map<String, User> userMap = Optional.of(instructs.stream()
-			.flatMap(i -> Stream.of(i.getAuditedUid(), i.getDesignateAuditUser()))
+			.flatMap(i ->
+				Stream.of(i.getAuditedUid(),
+					i.getDesignateAuditUser(),
+					Optional.ofNullable(i.getMetadata())
+						.filter(x -> x.getCreated() != null)
+						.map(Metadata::getCreated)
+						.filter(x -> x.getUid() != null)
+						.map(Created::getUid)
+						.orElse(null),
+					Optional.ofNullable(i.getMetadata())
+						.filter(x -> x.getLastModified() != null)
+						.map(Metadata::getLastModified)
+						.filter(x -> x.getUid() != null)
+						.map(LastModified::getUid)
+						.orElse(null)
+				)
+			)
+			.filter(Objects::nonNull)
 			.collect(Collectors.toSet()))
 			.map(userClientCredentialsClient::findMap)
 			.orElse(Collections.emptyMap());
@@ -155,11 +175,8 @@ public class InstructService {
 
 		return instructs.stream()
 			.map(i -> {
-				List<File> files = Optional.ofNullable(i.getFiles()).orElse(Collections.emptyList()).stream().map(fileMap::get).filter(Objects::nonNull).collect(Collectors.toList());
-				Project project = projectMap.get(i.getProject());
-				User designateAuditUser = userMap.get(i.getDesignateAuditUser());
-				User auditedUser = userMap.get(i.getAuditedUid());
-				return InstructConverter.mongo(i, files, project, designateAuditUser, auditedUser);
+				com.hfhk.auth.Metadata metadata = MetadataConverter.metadata(i.getMetadata(), userMap);
+				return InstructConverter.mongo(i, fileMap, projectMap, userMap, metadata);
 			})
 			.collect(Collectors.toList());
 	}
@@ -171,14 +188,16 @@ public class InstructService {
 			.map(userClientCredentialsClient::findMap)
 			.orElse(Collections.emptyMap());
 		Map<String, Project> projectMap = projectService.findMap(Collections.singleton(instruct.getProject()));
-		List<File> files = Optional.of(Optional.ofNullable(instruct.getFiles()).orElse(Collections.emptyList()))
+		Map<String, File> fileMap = Optional.of(Optional.ofNullable(instruct.getFiles()).orElse(Collections.emptyList()))
+			.filter(x -> !x.isEmpty())
 			.map(ids ->
 				fileClientCredentialsClient.findFile(FileFindParam.builder().ids(new HashSet<>(ids)).build()).stream()
 					.filter(x -> ids.contains(x.getId()))
-					.collect(Collectors.toList())
+					.collect(Collectors.toMap(File::getId, y -> y))
 			)
-			.orElse(Collections.emptyList());
+			.orElse(Collections.emptyMap());
+		com.hfhk.auth.Metadata metadata = MetadataConverter.metadata(instruct.getMetadata(), userMap);
 
-		return InstructConverter.mongo(instruct, files, projectMap.get(instruct.getProject()), userMap.get(instruct.getDesignateAuditUser()), userMap.get(instruct.getAuditedUid()));
+		return InstructConverter.mongo(instruct, fileMap, projectMap, userMap, metadata);
 	}
 }

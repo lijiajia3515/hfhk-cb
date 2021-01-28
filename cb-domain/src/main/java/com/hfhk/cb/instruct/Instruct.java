@@ -1,5 +1,6 @@
 package com.hfhk.cb.instruct;
 
+import com.hfhk.auth.Metadata;
 import com.hfhk.auth.modules.user.User;
 import com.hfhk.cb.audit.AuditState;
 import com.hfhk.cb.project.Project;
@@ -40,6 +41,8 @@ public class Instruct implements Serializable {
 	private LocalDateTime appliedAt;
 	private LocalDateTime passedAt;
 	private LocalDateTime rejectedAt;
+
+	private Metadata metadata;
 	private String remark;
 
 }
