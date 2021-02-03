@@ -264,7 +264,8 @@ public class ProjectService {
 				.stream().findFirst()
 			)
 			.orElse(null);
-		User supervisionLeader = userClient.findById(project.getSupervisionLeader());
+		User supervisionLeader = Optional.ofNullable(project.getSupervisionLeader()).map(userClient::findById).orElse(null);
+		
 		return ProjectConverter.projectMapper(project, park, type, schedule, supervisionLeader);
 	}
 
