@@ -1,4 +1,4 @@
-rootProject.name = 'cb'
+rootProject.name = 'hfhk-cb'
 
 include 'cb-domain'
 include 'cb-service'
